@@ -400,6 +400,17 @@ a, button { -webkit-tap-highlight-color: transparent; }
   .fh-visual-card:hover, .contact-link:hover { transform: none; }
 }
 
+
+/* Leadership and company details are presented in the About Us section */
+.about-leadership{max-width:1000px;margin:0 auto 28px;padding:clamp(22px,3.5vw,36px);background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:0 12px 40px rgba(6,39,72,.06)}
+.about-company-intro h3{margin:0 0 8px;color:var(--navy);font-size:clamp(22px,2.5vw,30px)}
+.about-company-intro p{margin:0 0 22px;color:var(--muted);font-weight:800;line-height:1.8}
+.about-leadership-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.about-leader{padding:20px 19px;border:1px solid #dce8ee;border-radius:18px;background:#fbfdfc;min-width:0}
+.about-leader span{display:block;color:#7b8da3;font-size:14px;margin-bottom:7px}
+.about-leader strong{display:block;color:#172b46;font-size:clamp(16px,2vw,20px);overflow-wrap:anywhere}
+@media(max-width:520px){.about-leadership-grid{grid-template-columns:1fr}.about-leadership{padding:22px}}
+
 </style>
 </head>
 <body>
@@ -438,6 +449,14 @@ a, button { -webkit-tap-highlight-color: transparent; }
 <section class="about-content" id="about">
  <div class="container">
   <div class="section-head reveal"><div class="eyebrow">About FinHike Solutions</div><h2>FinHike Solutions – Connecting India Through Technology</h2><p>Empowering every business. Connecting every community. Building a Digital India.</p></div>
+  <div class="about-leadership reveal">
+   <div class="about-company-intro"><h3>FinHike Solutions</h3><p>“Where Innovation Drives Technology and Technology Delivers Better Business.”</p></div>
+   <div class="about-leadership-grid">
+    <div class="about-leader"><span>Founder</span><strong>G. Kiran</strong></div>
+    <div class="about-leader"><span>Managing Director</span><strong>P. Janardhana Chary</strong></div>
+    <div class="about-leader"><span>Managing Director</span><strong>Siba Prasad Sahu</strong></div>
+   </div>
+  </div>
   <div class="about-copy reveal">
    <h3>Our Vision</h3>
    <p>At <strong>FinHike Solutions</strong>, our vision is to make technology accessible, affordable, and beneficial to every individual, business, and community across India. As technology continues to evolve every day, digital services are becoming an essential part of our personal and professional lives. We believe that everyone, regardless of their location, business size, or technical knowledge, should have the opportunity to benefit from the power of the digital world.</p>
@@ -606,6 +625,7 @@ a, button { -webkit-tap-highlight-color: transparent; }
   <p style="text-align:center;color:var(--muted);font-size:13px">No specific vacancies are listed on this page. Use the contact form to introduce yourself and share your area of interest.</p>
  </div>
 </section>
+\n
 <section id="milk-project" class="milk-project">
  <div class="container">
   <div class="section-head">
@@ -679,19 +699,14 @@ a, button { -webkit-tap-highlight-color: transparent; }
  <div class="container">
   <div class="section-head reveal"><div class="eyebrow">Contact FinHike</div><h2>Let's turn your idea into a digital service.</h2><p>Tell us about your business and the service you want to build.</p></div>
   <div class="contact-box reveal">
-   <div><h3>FinHike Solutions</h3><p style="color:var(--muted);line-height:1.8"><b>“Where Innovation Drives Technology and Technology Delivers Better Business.”</b></p>
-    <div class="contact-list">
-     <div class="contact-item"><small>Founder</small><strong>G. Kiran</strong></div>
-     <div class="contact-item"><small>Managing Director</small><strong>P. Janardhana Chary</strong></div>
-     <div class="contact-item"><small>Managing Director</small><strong>Siba Prasad Sahu</strong></div>
-    </div>
+   <div><h3>Contact FinHike Solutions</h3><p style="color:var(--muted);line-height:1.8">Have a question or a project in mind? Reach out to our team and tell us how we can help.</p>
     <div class="contact-links">
      <a class="contact-link" href="mailto:info@finhikesolutions.com"><span aria-hidden="true">✉️</span><span><small>You Can Email Here</small><br>info@finhikesolutions.com</span></a>
      <a class="contact-link" href="https://www.linkedin.com/in/finhike-solutions-397a12445/" target="_blank" rel="noopener noreferrer"><span aria-hidden="true" style="font-size:24px;color:#0a66c2">in</span><span><small>Connect on LinkedIn</small><br>FinHike Solutions</span></a>
     </div>
     <div class="contact-extra"><strong>☎ Contact</strong><br><a href="tel:+914049989614">+91 040 4998 9614</a><br><br><strong>📍 India Office</strong><br>KPHB, Kukatpally, 9th Phase, Hyderabad, Telangana – 500085<br><br><strong>📍 United States Office</strong><br>Bentonville, Arkansas, United States</div>
    </div>
-   <form id="enquiryForm" action="https://formsubmit.co/info@finhikesolutions.com" method="POST">
+   <form id="enquiryForm" action="https://formsubmit.co/finhikesolutions@gmail.com" method="POST" onsubmit="submitForm(event)">
     <input type="hidden" name="_subject" value="New Enquiry - FinHike Solutions">
     <input type="hidden" name="_template" value="table">
     <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
