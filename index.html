@@ -415,6 +415,24 @@ a, button { -webkit-tap-highlight-color: transparent; }
 </style>
 </head>
 <body>
+<script>
+/* Remove an accidental standalone greater-than character if it was emitted as page text. */
+(function () {
+  function removeStrayGreaterThan() {
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    var nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(function (node) {
+      if (node.nodeValue && node.nodeValue.trim() === '>') node.remove();
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', removeStrayGreaterThan, { once: true });
+  } else {
+    removeStrayGreaterThan();
+  }
+})();
+</script>
 <div class="topline"></div>
 
 <nav>
