@@ -3,164 +3,160 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Dairy Milk Management System (DMMS)</title>
-<style>
-:root{--green:#16734b;--green2:#209765;--ink:#18352a;--muted:#6c8178;--bg:#f3f8f5;--line:#dce9e1;--white:#fff}
-*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--ink)}
-header{background:linear-gradient(115deg,#104d35,#209765);color:#fff;padding:22px clamp(18px,4vw,48px);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:13px}.logo{width:48px;height:48px;border-radius:15px;background:#ffffff20;display:grid;place-items:center;font-size:27px}.brand h1{font-size:clamp(19px,3vw,27px);margin:0}.brand p{margin:4px 0 0;color:#d8f4e5;font-size:13px}
-header .date{font-size:13px;color:#e1f6e9}
-nav{display:flex;gap:8px;flex-wrap:wrap;padding:13px clamp(18px,4vw,48px);background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
-nav button,.btn{border:0;border-radius:10px;padding:10px 15px;background:#eaf4ee;color:var(--green);font-weight:700;cursor:pointer}
-nav button.active,.btn.primary{background:var(--green);color:#fff}button:hover{filter:brightness(.96);transform:translateY(-1px)}
-main{max-width:1250px;margin:auto;padding:26px clamp(14px,3vw,36px) 60px}.page{display:none}.page.active{display:block}
-h2{margin:0 0 5px;font-size:25px}.sub{margin:0 0 20px;color:var(--muted)}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:14px;margin:18px 0}.card,.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 7px 22px #164c3010}.card span{color:var(--muted);font-size:13px}.card strong{display:block;font-size:27px;margin-top:9px;color:var(--green)}
-.panel{margin:15px 0}.panel h3{margin:0 0 15px;font-size:17px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}
-label{display:block;font-size:13px;font-weight:700;color:#526b5e}input,select{width:100%;margin-top:7px;border:1px solid #cdded3;border-radius:9px;padding:11px 12px;background:#fff;color:var(--ink);font:inherit;outline:none}input:focus,select:focus{border-color:var(--green2);box-shadow:0 0 0 3px #20976520}
-.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}.btn.secondary{background:#edf2ef;color:#405c4d}.btn.warn{background:#fff0df;color:#9a5a12}
-.search-results{border:1px solid var(--line);border-radius:10px;margin-top:6px;overflow:hidden;background:#fff;display:none}.search-results button{display:block;width:100%;text-align:left;border:0;border-bottom:1px solid var(--line);padding:10px 12px;background:#fff;color:var(--ink);cursor:pointer}.search-results button:last-child{border:0}.hint{font-size:12px;color:var(--muted);margin-top:7px}
-table{width:100%;border-collapse:collapse;min-width:650px}th,td{text-align:left;padding:11px 10px;border-bottom:1px solid var(--line);font-size:13px}th{background:#f1f7f3;color:#456454}td.num{text-align:right}.table-wrap{overflow:auto}
-.total{background:#edf7f0;border-radius:12px;padding:14px;margin-top:14px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-weight:700}.total strong{font-size:21px;color:var(--green)}
-.empty{text-align:center;color:var(--muted);padding:24px}
-footer{text-align:center;padding:20px;color:#71857a;font-size:12px}
-@media print{header,nav,.no-print,footer{display:none!important}body{background:#fff}main{padding:0;max-width:none}.page{display:none!important}#reports{display:block!important}.panel,.card{box-shadow:none;break-inside:avoid}.report-title{display:block!important}}
-.report-title{display:none}
-</style>
+<title>Venkateswara Milk Centre - Dairy Management</title>
+<link rel="stylesheet" href="../Assets/CSS/style.css">
 </head>
 <body>
-<header>
- <div class="brand"><div class="logo">🥛</div><div><h1>Dairy Milk Management System (DMMS)</h1><p>Smart dairy operations • Customer records • Milk collection • Reports</p></div></div>
- <div class="date" id="todayLabel"></div>
-</header>
-<nav class="no-print">
- <button class="active" data-page="dashboard">Dashboard</button>
- <button data-page="customers">Customers</button>
- <button data-page="collection">Milk Collection</button>
- <button data-page="reports">Reports & PDF</button>
-</nav>
-<main>
+<aside class="sidebar">
+  <div class="brand"><img src="../Images/venakateswaraswamy.jpg" alt="Lord Venkateswara"><div>Venkateswara<br><span>Milk Centre</span></div></div>
+  <nav class="menu">
+    <button class="active" data-page="dashboard">📊 Dashboard</button>
+    <button data-page="customers">👥 Customers</button>
+    <button data-page="collection">🥛 Milk Collection</button>
+    <button data-page="billing">💰 Billing & Payments</button>
+    <button data-page="messages">📱 Acknowledgements</button>
+    <button data-page="reports">📈 Reports</button>
+    <button data-page="settings">⚙️ Settings</button>
+  </nav>
+</aside>
+<main class="main">
+<div class="milk-top-animation" aria-hidden="true"><span class="milk-drop drop-1"></span><span class="milk-drop drop-2"></span><span class="milk-splash"></span><span class="milk-bubble bubble-1"></span><span class="milk-bubble bubble-2"></span><span class="milk-bubble bubble-3"></span></div>
+<header class="topbar"><div><h1>Milk Dairy Management System</h1><small>Database connected management portal</small></div><div id="dateTimeBox" class="datetime-box"></div><div class="admin-bar"><strong>👤 <span id="adminName">Administrator</span></strong><button class="btn danger" id="logoutBtn">Logout</button></div></header>
+
 <section id="dashboard" class="page active">
- <h2>Dashboard</h2><p class="sub">Your daily dairy activity at a glance.</p>
- <div class="cards">
-  <div class="card"><span>Registered customers</span><strong id="statCustomers">0</strong></div>
-  <div class="card"><span>Today's milk</span><strong id="statLitres">0.00 L</strong></div>
-  <div class="card"><span>Today's collection value</span><strong id="statAmount">₹0.00</strong></div>
-  <div class="card"><span>Collection entries</span><strong id="statEntries">0</strong></div>
- </div>
- <div class="panel"><h3>Recent milk collections</h3><div class="table-wrap"><table><thead><tr><th>Date</th><th>Customer</th><th>Morning (L)</th><th>Evening (L)</th><th>Total (L)</th><th>Amount</th></tr></thead><tbody id="recentRows"></tbody></table></div></div>
+  <div class="page-title"><h2>Dashboard</h2><p>Live information from MySQL</p></div>
+  <div class="cards">
+    <div class="card"><span>Today's Litres</span><b id="dashLitres">0 L</b></div>
+    <div class="card"><span>Customers Served</span><b id="dashCustomers">0</b></div>
+    <div class="card"><span>Today's Amount</span><b id="dashAmount">₹0.00</b></div>
+    <div class="card"><span>Pending Amount</span><b id="dashPending">₹0.00</b></div>
+    <div class="card"><span>Average Fat</span><b id="dashFat">0.00%</b></div>
+  </div>
+  <div class="panel"><h3>Today's Collection</h3><div class="table-wrap"><table><thead><tr><th>Customer ID</th><th>Customer</th><th>Morning</th><th>Morning Fat</th><th>Afternoon</th><th>Afternoon Fat</th><th>Total</th><th>Amount</th></tr></thead><tbody id="dashTable"></tbody></table></div></div>
 </section>
+
 <section id="customers" class="page">
- <h2>Customer Management</h2><p class="sub">Add and find customers using their name, phone number or customer ID.</p>
- <div class="panel"><h3>Add customer</h3><div class="grid">
-  <label>Customer ID<input id="newId" placeholder="Auto generated" readonly></label>
-  <label>Customer name<input id="newName" placeholder="Enter full name"></label>
-  <label>Phone number<input id="newPhone" type="tel" placeholder="10-digit mobile number"></label>
-  <label>Address<input id="newAddress" placeholder="Village / address"></label>
- </div><div class="actions"><button class="btn primary" id="addCustomer">Save customer</button></div></div>
- <div class="panel"><h3>Customer directory</h3><input id="directorySearch" placeholder="Search customer name, phone or ID"><div class="table-wrap"><table><thead><tr><th>Customer ID</th><th>Name</th><th>Phone</th><th>Address</th></tr></thead><tbody id="customerRows"></tbody></table></div></div>
+  <div class="page-title"><h2>Customer Management</h2><p>Add customers and search by ID, phone or name.</p></div>
+  <div class="panel"><h3>Add Customer</h3><div class="grid3">
+    <label>Customer ID<input id="customerCode" placeholder="SVMC01" readonly title="Automatically generated"></label>
+    <label>Name<input id="customerName" placeholder="Customer name"></label>
+    <label>Mobile<input id="customerMobile" placeholder="10 digit mobile"></label>
+    <label>Address<input id="customerAddress" placeholder="Address"></label>
+    <label>Status<select id="customerStatus"><option>Active</option><option>Inactive</option></select></label>
+    <label>Opening Pending<input id="openingPending" type="number" min="0" step="0.01" value="0"></label>
+  </div><button class="btn success" id="saveCustomerBtn">Save Customer</button></div>
+  <div class="panel"><h3>Customer List</h3><input id="customerSearch" class="search" placeholder="Search ID, phone or name"><div class="table-wrap"><table><thead><tr><th>ID</th><th>Name</th><th>Mobile</th><th>Status</th><th>Pending</th><th>Action</th></tr></thead><tbody id="customerTable"></tbody></table></div></div>
+  <div class="panel" id="customerDetailsPanel" hidden><h3>Selected Customer Details</h3><div id="customerDetails"></div></div>
 </section>
+
 <section id="collection" class="page">
- <h2>Milk Collection</h2><p class="sub">Search a customer instantly by name, phone number or ID before entering milk details.</p>
- <div class="panel"><div class="grid">
-  <label>Collection date<input id="collectionDate" type="date"></label>
-  <label>Find customer<input id="collectionSearch" autocomplete="off" placeholder="Type name / phone / ID"><div class="search-results" id="customerMatches"></div><div class="hint">Choose a customer from the matching results.</div></label>
-  <label>Selected customer<input id="selectedCustomer" placeholder="No customer selected" readonly></label>
- </div></div>
- <div class="panel"><h3>Morning collection</h3><div class="grid">
-  <label>Morning litres<input id="morningLitres" type="number" min="0" step=".01" value="0"></label>
-  <label>Morning fat<input id="morningFat" type="number" min="0" step=".1" value="0"></label>
-  <label>Rate per fat unit (₹)<input id="morningRate" type="number" min="0" step=".01" value="8"></label>
- </div></div>
- <div class="panel"><h3>Evening collection</h3><div class="grid">
-  <label>Evening litres<input id="eveningLitres" type="number" min="0" step=".01" value="0"></label>
-  <label>Evening fat<input id="eveningFat" type="number" min="0" step=".1" value="0"></label>
-  <label>Rate per fat unit (₹)<input id="eveningRate" type="number" min="0" step=".01" value="8"></label>
- </div>
- <div class="total"><span>Total milk: <b id="totalLitres">0.00 L</b></span><span>Collection amount: <strong id="totalAmount">₹0.00</strong></span></div>
- <div class="actions"><button class="btn primary" id="saveCollection">Save collection</button><button class="btn secondary" id="clearCollection">Clear form</button></div>
- <p class="hint">Calculation: (Morning litres × Morning fat × Morning rate) + (Evening litres × Evening fat × Evening rate).</p>
- </div>
+  <div class="page-title"><h2>Milk Collection</h2><p>Amount formula: (Morning Litres × Morning Fat + Afternoon Litres × Afternoon Fat) × Rate</p></div>
+  <div class="panel"><div class="grid3">
+    <label>Date<input id="collectionDate" type="date"></label>
+    <label>Customer Search<input id="collectionCustomerSearch" class="search" placeholder="ID / phone / name"></label>
+    <label>Selected Customer<select id="collectionCustomer"><option value="">Select customer</option></select></label>
+  </div><div id="selectedCollectionCustomer" class="info"></div></div>
+  <div class="panel"><h3>Morning</h3><div class="grid3">
+    <label>Morning Litres<input id="morningLitres" type="number" min="0" step="0.01" value="0"></label>
+    <label>Morning Fat<input id="morningFat" type="number" min="0" step="0.01" value="0"></label>
+    <label>Morning Rate<input id="morningRate" type="number" min="0" step="0.01" value="1"></label>
+  </div></div>
+  <div class="panel"><h3>Afternoon</h3><div class="grid3">
+    <label>Afternoon Litres<input id="afternoonLitres" type="number" min="0" step="0.01" value="0"></label>
+    <label>Afternoon Fat<input id="afternoonFat" type="number" min="0" step="0.01" value="0"></label>
+    <label>Afternoon Rate<input id="afternoonRate" type="number" min="0" step="0.01" value="1" readonly></label>
+  </div></div>
+  <div class="panel"><div class="summary-grid">
+    <div><span>Morning Amount</span><b id="morningAmount">₹0.00</b></div><div><span>Afternoon Amount</span><b id="afternoonAmount">₹0.00</b></div><div><span>Total Litres</span><b id="totalMilk">0.00 L</b></div><div><span>Daily Amount</span><b id="dailyAmount">₹0.00</b></div>
+  </div><p class="formula">(Morning Litres × Morning Fat + Afternoon Litres × Afternoon Fat) × Rate</p><label>Remarks<textarea id="collectionRemarks" rows="3"></textarea></label><button class="btn success" id="saveCollectionBtn">Save Collection</button> <button class="btn primary" id="saveAndSendBtn">Save &amp; Send WhatsApp</button></div>
 </section>
+
+<section id="billing" class="page">
+  <div class="page-title"><h2>Billing & Payments</h2><p>Bill amount is retrieved from milk_collections for the selected customer and period.</p></div>
+  <div class="panel"><div class="grid3">
+    <label>Customer Search<input id="billingCustomerSearch" class="search" placeholder="ID / phone / name"></label>
+    <label>Customer<select id="billingCustomer"><option value="">Select customer</option></select></label>
+    <label>Billing Date<input id="billingDate" type="date"></label>
+    <label>Billing Period<select id="billingPeriod"><option value="DAILY">Daily</option><option value="WEEKLY">Weekly</option><option value="MONTHLY">Monthly</option></select></label>
+    <label>Bill Amount<input id="billAmount" type="number" readonly value="0.00"></label>
+    <label>Previous Pending<input id="previousPending" type="number" readonly value="0.00"></label>
+    <label>Payment Received<input id="paymentReceived" type="number" min="0" step="0.01" value="0.00"></label>
+    <label>Payment Mode<select id="paymentMode"><option value="Cash">Cash</option><option value="Online">Online</option></select></label>
+    <label>Current Pending<input id="paymentCurrentPending" type="number" readonly value="0.00"></label>
+  </div><div id="billingCustomerInfo" class="info"></div><label>Remarks<textarea id="paymentRemarks" rows="3"></textarea></label><button class="btn warning" id="previewBillingBtn">Calculate Bill</button> <button class="btn success" id="savePaymentBtn">Save Payment</button></div>
+  <div class="panel"><h3>Recent Payments</h3><div class="table-wrap"><table><thead><tr><th>Date</th><th>Period</th><th>Bill</th><th>Previous Pending</th><th>Received</th><th>Mode</th><th>Current Pending</th></tr></thead><tbody id="paymentsTable"></tbody></table></div></div>
+</section>
+
+<section id="messages" class="page">
+  <div class="page-title"><h2>Acknowledgements</h2><p>Prepare the collection acknowledgement for the selected customer in normal WhatsApp. WhatsApp opens with the message pre-filled; press Send to deliver it.</p></div>
+  <div class="panel"><div class="grid3"><label>Customer<select id="messageCustomer"><option value="">Select customer</option></select></label><label>WhatsApp / Mobile<input id="messageMobile" readonly title="Always uses selected customer’s registered number"></label></div><label>Message<textarea id="messageText" rows="6"></textarea></label><button class="btn" id="generateMessageBtn" type="button">Generate Latest Collection Message</button> <button class="btn warning" id="sendSmsBtn">Send SMS Acknowledgement</button> <button class="btn success" id="sendWhatsAppBtn">Open WhatsApp &amp; Send</button><div id="messagingStatus" class="info"></div><p class="hint">Only active customers registered in this dairy system can use this feature. No WhatsApp Business API or token is required. The normal WhatsApp account on the operator’s phone/WhatsApp Web performs the final Send.</p></div>
+  <div class="panel"><h3>Message History</h3><div class="table-wrap"><table><thead><tr><th>Date</th><th>Customer</th><th>Channel</th><th>Status</th><th>Message</th></tr></thead><tbody id="messageTable"></tbody></table></div></div>
+</section>
+
 <section id="reports" class="page">
- <div class="report-title"><h1>Dairy Milk Management System (DMMS)</h1><p>Milk Collection Report</p></div>
- <h2 class="no-print">Reports & PDF Export</h2><p class="sub no-print">Generate reports for any 10-day period, weekly, monthly or a custom date range.</p>
- <div class="panel no-print"><div class="grid">
-  <label>Report period<select id="period"><option value="10days">Every 10 days (latest 10 days)</option><option value="weekly">Weekly (last 7 days)</option><option value="monthly">Monthly (current month)</option><option value="custom">Custom date range</option></select></label>
-  <label>From date<input id="fromDate" type="date"></label><label>To date<input id="toDate" type="date"></label>
- </div><div class="actions"><button class="btn primary" id="generateReport">Generate report</button><button class="btn warn" id="downloadPdf">Print / Save as PDF</button></div><p class="hint">In the print window, choose “Save as PDF” as the destination.</p></div>
- <div class="cards"><div class="card"><span>Report period</span><strong id="reportPeriod" style="font-size:17px">—</strong></div><div class="card"><span>Total milk</span><strong id="reportLitres">0.00 L</strong></div><div class="card"><span>Total amount</span><strong id="reportAmount">₹0.00</strong></div><div class="card"><span>Entries</span><strong id="reportEntries">0</strong></div></div>
- <div class="panel"><h3>Collection details</h3><div class="table-wrap"><table><thead><tr><th>Date</th><th>Customer ID</th><th>Customer</th><th>Morning L</th><th>Evening L</th><th>Total L</th><th>Amount (₹)</th></tr></thead><tbody id="reportRows"></tbody></table></div></div>
+  <div class="page-title"><h2>Reports</h2><p>Live collection report from the database.</p></div>
+  <div class="panel"><div class="grid3"><label>From Date<input id="reportFrom" type="date"></label><label>To Date<input id="reportTo" type="date"></label><label>Customer<select id="reportCustomer"><option value="0">All Customers</option></select></label></div><button class="btn primary" id="generateReportBtn">Generate Report</button> <button class="btn success" id="weeklyExcelBtn">Export Weekly Excel</button> <button class="btn success" id="monthlyExcelBtn">Export Monthly Excel</button></div>
+  <div class="panel"><div class="summary-grid"><div><span>Total Litres</span><b id="reportLitres">0</b></div><div><span>Average Fat</span><b id="reportFat">0%</b></div><div><span>Total Amount</span><b id="reportAmount">₹0.00</b></div></div></div>
+  <div class="panel"><div class="table-wrap"><table><thead><tr><th>Date</th><th>Customer</th><th>Morning L</th><th>Morning Fat</th><th>Afternoon L</th><th>Afternoon Fat</th><th>Total L</th><th>Amount</th></tr></thead><tbody id="reportTable"></tbody></table></div></div>
+</section>
+
+<section id="settings" class="page">
+  <div class="page-title"><h2>Settings</h2><p>Settings are stored in dairy_settings and rates in fat_rate_slabs.</p></div>
+  <div class="panel"><h3>Dairy Settings</h3><div class="grid3"><label>Dairy Name<input id="dairyName"></label><label>Mobile<input id="dairyMobile"></label><label>Address<input id="dairyAddress"></label></div><label>Message Template<textarea id="messageTemplate" rows="6"></textarea></label><h3>SMS Configuration</h3><div class="grid3"><label>Fast2SMS API Key<input id="smsApiKey" type="password" placeholder="Enter Fast2SMS API key"></label></div><h3>WhatsApp</h3><p class="hint">Normal-account mode: WhatsApp Click to Chat. No API key, business account, template or Phone Number ID is needed. The website prepares the message and opens the selected customer’s WhatsApp chat.</p><button class="btn success" id="saveSettingsBtn">Save Settings & Messaging</button></div>
+  <div class="panel"><h3>Fat Rate Slabs</h3><div class="table-wrap"><table><thead><tr><th>Fat From</th><th>Fat To</th><th>Rate</th><th>Effective From</th><th>Status</th></tr></thead><tbody id="ratesTable"></tbody></table></div></div>
+  <div class="panel"><h3>Administrator Access</h3><div class="grid3"><label>Username<input id="adminUsername" readonly></label><label>Current Password<input id="currentPassword" type="password"></label><label>New Password<input id="newPassword" type="password" placeholder="Minimum 8 characters"></label></div><button class="btn primary" id="changePasswordBtn">Change Administrator Password</button><p class="hint">Messaging API keys are configured in <code>Config/services.php</code> or server environment variables. Do not publish real API keys in client-side JavaScript.</p></div>
 </section>
 </main>
-<footer>DMMS • Dairy Milk Management System</footer>
+<div id="toast" class="toast"></div>
+<div class="cow-walk-lane" aria-hidden="true">
+  <span class="dairy-bubble b1"></span>
+  <span class="dairy-bubble b2"></span>
+  <span class="dairy-bubble b3"></span>
+  <span class="dairy-bubble b4"></span>
+  <span class="milk-wave"></span>
+  <div class="cow-shadow"></div>
+  <div class="walking-cow"><img src="../Images/animated_cow.gif" alt="Animated dairy cow"></div>
+</div>
+<div class="copyright-footer" aria-label="Copyright information">
+  <strong>© 2026 • G Kiran</strong>
+  <span class="credit-line">Created by: P Janardhana Chary &amp; Siba Prasd</span>
+</div>
+
+<script src="../Assets/JS/app.js"></script>
+
 <script>
-const $=id=>document.getElementById(id), money=n=>'₹'+Number(n||0).toFixed(2), today=()=>new Date().toISOString().slice(0,10);
-let customers=JSON.parse(localStorage.getItem('dmms_customers')||'[]');
-let collections=JSON.parse(localStorage.getItem('dmms_collections')||'[]');
-let selected=null;
-const saveData=()=>{localStorage.setItem('dmms_customers',JSON.stringify(customers));localStorage.setItem('dmms_collections',JSON.stringify(collections));};
-const safe=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function nextId(){return 'SVMC'+String(customers.length+1).padStart(2,'0')}
-function showPage(name){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===name));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===name));if(name==='reports')generateReport()}
-document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
-$('todayLabel').textContent=new Date().toLocaleString();
-$('newId').value=nextId();$('collectionDate').value=today();$('fromDate').value=today();$('toDate').value=today();
-function renderCustomers(filter=''){
- const q=filter.toLowerCase();const rows=customers.filter(c=>(c.id+' '+c.name+' '+c.phone).toLowerCase().includes(q));
- $('customerRows').innerHTML=rows.length?rows.map(c=>`<tr><td>${safe(c.id)}</td><td>${safe(c.name)}</td><td>${safe(c.phone)}</td><td>${safe(c.address)}</td></tr>`).join(''):'<tr><td colspan="4" class="empty">No customers found. Add a customer to begin.</td></tr>';
-}
-$('directorySearch').addEventListener('input',e=>renderCustomers(e.target.value));
-$('addCustomer').onclick=()=>{
- const name=$('newName').value.trim(),phone=$('newPhone').value.trim();
- if(!name||!phone){alert('Please enter customer name and phone number.');return}
- if(customers.some(c=>c.phone===phone)){alert('This phone number is already registered.');return}
- customers.push({id:nextId(),name,phone,address:$('newAddress').value.trim()});saveData();
- ['newName','newPhone','newAddress'].forEach(id=>$(id).value='');$('newId').value=nextId();renderCustomers();refreshDashboard();alert('Customer saved successfully.');
-};
-$('collectionSearch').addEventListener('input',e=>{
- const q=e.target.value.toLowerCase().trim(), box=$('customerMatches');
- if(!q){box.style.display='none';return}
- const found=customers.filter(c=>(c.name+' '+c.phone+' '+c.id).toLowerCase().includes(q)).slice(0,8);
- box.innerHTML=found.length?found.map((c,i)=>`<button type="button" data-index="${i}"><b>${safe(c.name)}</b> — ${safe(c.id)} · ${safe(c.phone)}</button>`).join(''):'<div class="hint" style="padding:10px">No matching customer.</div>';
- box.style.display='block';box.querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{selected=found[i];$('selectedCustomer').value=`${selected.id} - ${selected.name} (${selected.phone})`;box.style.display='none';$('collectionSearch').value=selected.name;});
-});
-function calc(){
- const ml=+$('morningLitres').value||0,el=+$('eveningLitres').value||0;
- const ma=ml*(+$('morningFat').value||0)*(+$('morningRate').value||0),ea=el*(+$('eveningFat').value||0)*(+$('eveningRate').value||0);
- $('totalLitres').textContent=(ml+el).toFixed(2)+' L';$('totalAmount').textContent=money(ma+ea);return {ml,el,amount:ma+ea};
-}
-['morningLitres','morningFat','morningRate','eveningLitres','eveningFat','eveningRate'].forEach(id=>$(id).addEventListener('input',calc));
-$('saveCollection').onclick=()=>{
- if(!selected){alert('Search and select a customer first.');return}
- const v=calc();if(v.ml+v.el<=0){alert('Enter at least one milk quantity.');return}
- collections.push({date:$('collectionDate').value||today(),id:selected.id,name:selected.name,ml:v.ml,el:v.el,total:v.ml+v.el,amount:v.amount});
- saveData();refreshDashboard();generateReport();alert('Milk collection saved successfully.');clearForm();
-};
-function clearForm(){selected=null;$('collectionSearch').value='';$('selectedCustomer').value='';['morningLitres','morningFat','eveningLitres','eveningFat'].forEach(id=>$(id).value=0);calc()}
-$('clearCollection').onclick=clearForm;
-function refreshDashboard(){
- const t=today(),day=collections.filter(c=>c.date===t);
- $('statCustomers').textContent=customers.length;$('statLitres').textContent=day.reduce((s,c)=>s+c.total,0).toFixed(2)+' L';$('statAmount').textContent=money(day.reduce((s,c)=>s+c.amount,0));$('statEntries').textContent=day.length;
- const recent=[...collections].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,8);
- $('recentRows').innerHTML=recent.length?recent.map(c=>`<tr><td>${safe(c.date)}</td><td>${safe(c.name)}</td><td>${c.ml.toFixed(2)}</td><td>${c.el.toFixed(2)}</td><td>${c.total.toFixed(2)}</td><td>${money(c.amount)}</td></tr>`).join(''):'<tr><td colspan="6" class="empty">No collection entries yet.</td></tr>';
-}
-function reportDates(){
- const now=new Date(),period=$('period').value;let from,to=today();
- if(period==='10days'){from=new Date(now);from.setDate(now.getDate()-9);from=from.toISOString().slice(0,10)}
- else if(period==='weekly'){from=new Date(now);from.setDate(now.getDate()-6);from=from.toISOString().slice(0,10)}
- else if(period==='monthly'){from=new Date(now.getFullYear(),now.getMonth(),1).toISOString().slice(0,10)}
- else {from=$('fromDate').value||today();to=$('toDate').value||today()}
- return {from,to};
-}
-function generateReport(){
- const {from,to}=reportDates(),rows=collections.filter(c=>c.date>=from&&c.date<=to).sort((a,b)=>a.date.localeCompare(b.date));
- const litres=rows.reduce((s,c)=>s+c.total,0),amount=rows.reduce((s,c)=>s+c.amount,0);
- $('reportPeriod').textContent=from+' to '+to;$('reportLitres').textContent=litres.toFixed(2)+' L';$('reportAmount').textContent=money(amount);$('reportEntries').textContent=rows.length;
- $('reportRows').innerHTML=rows.length?rows.map(c=>`<tr><td>${safe(c.date)}</td><td>${safe(c.id)}</td><td>${safe(c.name)}</td><td>${c.ml.toFixed(2)}</td><td>${c.el.toFixed(2)}</td><td>${c.total.toFixed(2)}</td><td>${money(c.amount)}</td></tr>`).join(''):'<tr><td colspan="7" class="empty">No records for this report period.</td></tr>';
-}
-$('period').onchange=()=>{const custom=$('period').value==='custom';$('fromDate').disabled=!custom;$('toDate').disabled=!custom;generateReport()};
-$('generateReport').onclick=generateReport;$('downloadPdf').onclick=()=>{generateReport();window.print()};
-refreshDashboard();renderCustomers();calc();generateReport();
+(function(){
+  function dairyEffect(e){
+    var target=e.target.closest('button, .btn, a.btn, input[type="button"], input[type="submit"]');
+    if(!target) return;
+    var x=e.clientX || (window.innerWidth/2), y=e.clientY || 20;
+
+    var r=document.createElement('span');
+    r.className='dairy-click-ripple';
+    r.style.left=(x-8)+'px'; r.style.top=(y-8)+'px';
+    document.body.appendChild(r);
+    setTimeout(function(){r.remove()},700);
+
+    target.classList.remove('dairy-success');
+    void target.offsetWidth;
+    target.classList.add('dairy-success');
+    setTimeout(function(){target.classList.remove('dairy-success')},550);
+
+    var flash=document.createElement('div');
+    flash.className='dairy-action-flash';
+    flash.style.setProperty('--x',x+'px');
+    flash.style.setProperty('--y',y+'px');
+    document.body.appendChild(flash);
+    setTimeout(function(){flash.remove()},500);
+
+    var bar=document.createElement('div');
+    bar.className='dairy-page-shimmer';
+    document.body.appendChild(bar);
+    setTimeout(function(){bar.remove()},650);
+  }
+  document.addEventListener('click',dairyEffect,true);
+})();
 </script>
-</body></html>
+
+</body>
+</html>
