@@ -440,6 +440,28 @@ a, button { -webkit-tap-highlight-color: transparent; }
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="icon" type="image/png" sizes="32x32" href="finhike-icon-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="finhike-icon-180.png">
+<style id="finhike-enquiry-white-fields">
+/* Keep the enquiry inputs white even when a browser uses dark color schemes. */
+#enquiryForm { color-scheme: light; }
+#enquiryForm input:not([type="hidden"]):not([name="_honey"]),
+#enquiryForm textarea {
+  display:block; width:100%; box-sizing:border-box;
+  background:#ffffff !important; background-color:#ffffff !important;
+  color:#10233e !important; -webkit-text-fill-color:#10233e !important;
+  border:1px solid #cbd8e5 !important; border-radius:11px;
+  padding:14px; font:inherit; opacity:1;
+}
+#enquiryForm input::placeholder,#enquiryForm textarea::placeholder {
+  color:#69788b !important; -webkit-text-fill-color:#69788b !important; opacity:1;
+}
+#enquiryForm input:focus,#enquiryForm textarea:focus {
+  outline:2px solid #086fe8; outline-offset:1px; border-color:#086fe8 !important;
+}
+#enquiryForm input:-webkit-autofill { -webkit-box-shadow:0 0 0 1000px #fff inset !important; -webkit-text-fill-color:#10233e !important; }
+#enquiryForm .fh-field-label { display:block; font-size:14px; font-weight:750; color:#10233e; margin:3px 0 -4px; }
+#enquiryForm .fh-required { color:#c62828; font-weight:900; margin-left:3px; }
+#enquiryForm .fh-required-note { font-size:12px; color:#617187; margin:0 0 3px; }
+</style>
 </head>
 <body>
 <div class="topline"></div>
@@ -795,10 +817,14 @@ a, button { -webkit-tap-highlight-color: transparent; }
     <input type="hidden" name="_subject" value="New Enquiry - FinHike Solutions">
     <input type="hidden" name="_template" value="table">
     <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
-    <input required name="name" autocomplete="name" placeholder="Your Name">
-    <input required name="email" type="email" autocomplete="email" placeholder="Email Address">
-    <input name="mobile" type="tel" autocomplete="tel" placeholder="Mobile Number">
-    <textarea required name="message" placeholder="Which digital service are you interested in?"></textarea>
+    <label class="fh-field-label" for="fh-name">Full Name <span class="fh-required" aria-label="required">*</span></label>
+<input required id="fh-name" name="name" type="text" autocomplete="name" placeholder="Your Name" minlength="2" maxlength="80" pattern="[A-Za-z\u00C0-\u024F\u1E00-\u1EFF]+(?:[ .'’-][A-Za-z\u00C0-\u024F\u1E00-\u1EFF]+)*" title="Enter letters only (no numbers or symbols)." aria-label="Your name">
+    <label class="fh-field-label" for="fh-email">Email Address <span class="fh-required" aria-label="required">*</span></label>
+<input required id="fh-email" name="email" type="email" autocomplete="email" placeholder="Email Address" maxlength="254" aria-label="Email address" title="Enter a valid email address, such as name@example.com">
+    <label class="fh-field-label" for="fh-mobile">Mobile Number <span class="fh-required" aria-label="required">*</span></label>
+<input required id="fh-mobile" name="mobile" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="10-digit Mobile Number" minlength="10" maxlength="10" pattern="[0-9]{10}" title="Enter exactly 10 digits (numbers only)." aria-label="10-digit mobile number">
+    <label class="fh-field-label" for="fh-message">Enquiry Message <span class="fh-required" aria-label="required">*</span></label>
+<textarea required id="fh-message" name="message" minlength="10" maxlength="2000" placeholder="Which digital service are you interested in?" aria-label="Enquiry message"></textarea>
     <button class="btn primary" id="enquirySubmit" type="submit" disabled>Send Enquiry →</button>
     <p id="enquiryStatus" role="status" aria-live="polite" style="margin:0;line-height:1.5"></p>
     <a id="enquiryEmailFallback" href="mailto:info@finhikesolutions.com" hidden>Email FinHike directly →</a>
@@ -1045,6 +1071,30 @@ document.querySelectorAll(".reveal").forEach(e=>observer.observe(e));
  const button = document.getElementById('enquirySubmit');
  const status = document.getElementById('enquiryStatus');
  const fallback = document.getElementById('enquiryEmailFallback');
+ const nameField = form.elements.namedItem('name');
+ const mobileField = form.elements.namedItem('mobile');
+ const emailField = form.elements.namedItem('email');
+ const messageField = form.elements.namedItem('message');
+ // Prevent digits and unsupported symbols in the name; allow Unicode letters, spaces, apostrophes and hyphens.
+ const validName = value => /^[\p{L}\p{M}]+(?:[ .'-][\p{L}\p{M}]+)*$/u.test(value.trim());
+ const validateField = field => {
+  field.setCustomValidity('');
+  const value = field.value.trim();
+  if (field === nameField && value && !validName(value)) field.setCustomValidity('Please enter a name using letters only (no numbers).');
+  if (field === mobileField && value && !/^[0-9]{10}$/.test(value)) field.setCustomValidity('Please enter exactly 10 digits for your mobile number.');
+  if (field === emailField && value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) field.setCustomValidity('Enter a valid email address, such as name@example.com.');
+  if (field === messageField && value && value.length < 10) field.setCustomValidity('Please enter at least 10 characters in your message.');
+ };
+ [nameField, mobileField, emailField, messageField].forEach(field => {
+  field.addEventListener('input', () => validateField(field));
+  field.addEventListener('blur', () => validateField(field));
+ });
+ mobileField.addEventListener('input', () => {
+  const cleaned = mobileField.value.replace(/\D/g, '').slice(0, 10);
+  if (mobileField.value !== cleaned) mobileField.value = cleaned;
+  validateField(mobileField);
+ });
+
  function showEnquirySuccess() {
   if (sessionStorage.getItem('finhikeEnquirySuccess') !== '1') return;
   sessionStorage.removeItem('finhikeEnquirySuccess');
@@ -1070,6 +1120,11 @@ document.querySelectorAll(".reveal").forEach(e=>observer.observe(e));
  form.addEventListener('submit', async (event) => {
   event.preventDefault();
   if (button.disabled) return;
+  [nameField, mobileField, emailField, messageField].forEach(validateField);
+  if (!form.reportValidity()) return;
+  nameField.value = nameField.value.trim();
+  emailField.value = emailField.value.trim();
+  messageField.value = messageField.value.trim();
 
   button.disabled = true;
   fallback.hidden = true;
