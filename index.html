@@ -788,14 +788,12 @@ a, button { -webkit-tap-highlight-color: transparent; }
     </div>
     <div class="contact-extra"><strong>☎ Contact</strong><br><a href="tel:+914049989614">+91 040 4998 9614</a><br><br><strong>📍 India Office</strong><br>KPHB, Kukatpally, 9th Phase, Hyderabad, Telangana – 500085<br><br><strong>📍 United States Office</strong><br>Bentonville, Arkansas, United States</div>
    </div>
-   <form id="enquiryForm" action="https://formsubmit.co/ajax/finhikesolutions@gmail.com" method="POST">
-    <input type="hidden" name="_subject" value="New Enquiry - FinHike Solutions">
-    <input type="hidden" name="_template" value="table">
+   <form id="enquiryForm" method="POST">
     <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
-    <input required name="name" autocomplete="name" placeholder="Your Name">
+    <input required maxlength="100" name="name" autocomplete="name" placeholder="Your Name">
     <input required name="email" type="email" autocomplete="email" placeholder="Email Address">
-    <input name="mobile" type="tel" autocomplete="tel" placeholder="Mobile Number">
-    <textarea required name="message" placeholder="Which digital service are you interested in?"></textarea>
+    <input name="mobile" type="tel" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" title="Enter a 10-digit mobile number" autocomplete="tel" placeholder="Mobile Number">
+    <textarea required maxlength="3000" name="message" placeholder="Which digital service are you interested in?"></textarea>
     <button class="btn primary" id="enquirySubmit" type="submit" disabled>Send Enquiry →</button>
     <p id="enquiryStatus" role="status" aria-live="polite" style="margin:0;line-height:1.5"></p>
     <a id="enquiryEmailFallback" href="mailto:info@finhikesolutions.com" hidden>Email FinHike directly →</a>
@@ -1036,48 +1034,53 @@ document.querySelectorAll(".reveal").forEach(e=>observer.observe(e));
 })();
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script id="enquiry-script">
 (() => {
- const form = document.getElementById('enquiryForm');
- const button = document.getElementById('enquirySubmit');
- const status = document.getElementById('enquiryStatus');
- const fallback = document.getElementById('enquiryEmailFallback');
-
- form.addEventListener('submit', async (event) => {
-  event.preventDefault();
-  if (button.disabled) return;
-
-  button.disabled = true;
-  fallback.hidden = true;
-  status.textContent = 'Sending your enquiry…';
-
-  try {
-   const response = await fetch(form.action, {
-    method: 'POST',
-    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-    body: JSON.stringify(Object.fromEntries(new FormData(form))),
-    signal: AbortSignal.timeout(20000)
-   });
-   const result = await response.json();
-   const message = typeof result.message === 'string' ? result.message : '';
-   if (/activat|confirm your email|check your email|check your inbox/i.test(message)) {
-    status.textContent = 'Online enquiries are awaiting email activation. Your details are still here. You can email FinHike directly.';
+  // Configure these three values in EmailJS dashboard before publishing.
+  const EMAILJS_PUBLIC_KEY = 'YOUR_EMAILJS_PUBLIC_KEY';
+  const EMAILJS_SERVICE_ID = 'YOUR_EMAILJS_SERVICE_ID';
+  const EMAILJS_TEMPLATE_ID = 'YOUR_EMAILJS_TEMPLATE_ID';
+  const form = document.getElementById('enquiryForm');
+  const button = document.getElementById('enquirySubmit');
+  const status = document.getElementById('enquiryStatus');
+  const fallback = document.getElementById('enquiryEmailFallback');
+  if (!form || !button || !status) return;
+  const configured = ![EMAILJS_PUBLIC_KEY, EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID].some(v => v.startsWith('YOUR_'));
+  button.disabled = false;
+  if (!configured) {
+    status.textContent = 'Enquiry email setup is pending. Please contact info@finhikesolutions.com directly.';
     fallback.hidden = false;
-   } else if (response.ok && (result.success === true || result.success === 'true')) {
-    form.reset();
-    status.textContent = 'Thank you. Your enquiry was submitted.';
-   } else {
-    throw new Error('Enquiry submission was not confirmed.');
-   }
-  } catch {
-   status.textContent = 'We could not confirm your submission. Your details are still here. Please try again or email FinHike directly.';
-   fallback.hidden = false;
-  } finally {
-   button.disabled = false;
   }
- });
-
- button.disabled = false;
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (!form.reportValidity()) return;
+    if (!configured || !window.emailjs) {
+      status.textContent = 'Email sending is not configured or could not load. Please email us directly.';
+      fallback.hidden = false;
+      return;
+    }
+    const honey = form.querySelector('[name="_honey"]');
+    if (honey && honey.value) return;
+    button.disabled = true;
+    status.textContent = 'Sending your enquiry…';
+    fallback.hidden = true;
+    try {
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        from_name: form.elements.namedItem('name').value.trim(),
+        reply_to: form.elements.namedItem('email').value.trim(),
+        mobile: form.elements.namedItem('mobile').value.trim(),
+        message: form.elements.namedItem('message').value.trim(),
+        to_email: 'info@finhikesolutions.com'
+      }, { publicKey: EMAILJS_PUBLIC_KEY });
+      form.reset();
+      status.textContent = 'Thank you! Your enquiry has been sent successfully.';
+    } catch (error) {
+      console.error('EmailJS submission failed', error);
+      status.textContent = 'Your enquiry could not be sent. Please try again or email us directly.';
+      fallback.hidden = false;
+    } finally { button.disabled = false; }
+  });
 })();
 </script>
 
