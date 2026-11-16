@@ -462,6 +462,45 @@ a, button { -webkit-tap-highlight-color: transparent; }
 #enquiryForm .fh-required { color:#c62828; font-weight:900; margin-left:3px; }
 #enquiryForm .fh-required-note { font-size:12px; color:#617187; margin:0 0 3px; }
 </style>
+
+<style id="mobile-hero-spacing-fix">
+@media (max-width: 600px) {
+  .hero {
+    min-height: 0;
+    padding-top: 104px;
+    padding-bottom: 22px;
+  }
+  .hero-grid {
+    gap: 8px;
+  }
+  .hero-art {
+    min-height: 245px;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .keyboard img {
+    height: clamp(205px, 62vw, 250px);
+  }
+}
+</style>
+
+
+<style id="finhike-about-mobile-repair">
+/* Keep long About content visible: a tall reveal cannot meet a 12% viewport threshold on phones. */
+.about-content .about-copy.reveal{opacity:1;transform:none;visibility:visible;}
+@media(max-width:760px){
+ .about-content{padding:38px 0 48px;}
+ .about-content .section-head{margin:0 auto 22px;max-width:100%;}
+ .about-content .section-head h2{font-size:clamp(1.8rem,7.2vw,2.7rem);line-height:1.13;letter-spacing:-.035em;margin:10px 0 12px;overflow-wrap:break-word;}
+ .about-content .section-head p{font-size:clamp(.95rem,3.8vw,1.1rem);line-height:1.6;margin:0;}
+ .about-content .about-copy{padding:22px 18px;border-radius:18px;line-height:1.7;}
+ .about-content .about-copy h3{font-size:1.25rem;line-height:1.3;margin:22px 0 8px;}
+ .about-content .about-copy p{font-size:.96rem;line-height:1.7;margin-bottom:12px;}
+ .about-content .about-service-list{gap:10px;margin:14px 0 20px;}
+ .about-content .about-service-list article{padding:14px;}
+}
+@media(max-width:380px){.about-content .section-head h2{font-size:1.75rem;}.about-content .about-copy{padding:18px 14px;}}
+</style>
 </head>
 <body>
 <div class="topline"></div>
@@ -930,7 +969,7 @@ function openService(key){
 }
 function closeService(){document.getElementById("modal").classList.remove("open");document.body.style.overflow=""}
 document.getElementById("year").textContent=new Date().getFullYear();
-const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add("show")}),{threshold:.12});
+const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add("show")}),{threshold:0,rootMargin:"0px 0px -30px 0px"});
 document.querySelectorAll(".reveal").forEach(e=>observer.observe(e));
 </script>
 
@@ -942,7 +981,7 @@ document.querySelectorAll(".reveal").forEach(e=>observer.observe(e));
  const yearNode=document.getElementById('fhCopyrightYear');if(yearNode)yearNode.textContent=new Date().getFullYear();
  const animatedItems=document.querySelectorAll('.contact-item,.contact-box,.fh-visual-card,.service-grid .service');
  animatedItems.forEach((el,i)=>{el.classList.add('fh-reveal-on-scroll');el.style.transitionDelay=(i%6)*65+'ms'});
- if('IntersectionObserver' in window){const motionObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('show');motionObserver.unobserve(entry.target)}}),{threshold:.12});animatedItems.forEach(el=>motionObserver.observe(el));}else{animatedItems.forEach(el=>el.classList.add('show'))}
+ if('IntersectionObserver' in window){const motionObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('show');motionObserver.unobserve(entry.target)}}),{threshold:0,rootMargin:"0px 0px -30px 0px"});animatedItems.forEach(el=>motionObserver.observe(el));}else{animatedItems.forEach(el=>el.classList.add('show'))}
 })();
 </script>
 
