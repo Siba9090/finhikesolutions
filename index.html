@@ -501,6 +501,20 @@ a, button { -webkit-tap-highlight-color: transparent; }
 }
 @media(max-width:380px){.about-content .section-head h2{font-size:1.75rem;}.about-content .about-copy{padding:18px 14px;}}
 </style>
+<style id="fh-chat-mobile-input-fix">
+/* Chat messages scroll internally; input and Send remain visible and tappable. */
+#finhike-chat-panel{max-height:calc(100dvh - 95px)}
+#fh-chat-messages{min-height:0;overscroll-behavior:contain;scrollbar-width:thin}
+#fh-chat-form{flex:0 0 auto;display:flex;align-items:stretch;position:relative;z-index:2}
+#fh-chat-input{flex:1 1 auto;min-width:0;font-size:16px;touch-action:manipulation}
+#fh-chat-send{display:flex;align-items:center;justify-content:center;min-width:48px;width:48px;min-height:48px;flex:0 0 48px;touch-action:manipulation;cursor:pointer}
+#fh-chat-quick{flex:0 0 auto;max-height:105px;overflow-y:auto}
+@media(max-width:480px){
+ #finhike-chat-panel{height:min(560px,calc(100dvh - 95px));min-height:0;bottom:70px}
+ .fh-chat-compose{padding:9px;gap:8px}
+ #fh-chat-send{min-width:48px;width:48px;flex-basis:48px}
+}
+</style>
 </head>
 <body>
 <div class="topline"></div>
@@ -813,6 +827,7 @@ a, button { -webkit-tap-highlight-color: transparent; }
 
 
 
+
 <section class="fh-linkedin-section" id="linkedin-featured-post" aria-labelledby="fh-linkedin-title">
  <div class="container">
   <div class="section-head reveal"><span class="eyebrow">CONNECT WITH US</span><h2 id="fh-linkedin-title">From our LinkedIn</h2><p>Get to know FinHike Solutions, our vision, and the digital services we are building for everyone.</p></div>
@@ -1024,9 +1039,10 @@ document.querySelectorAll(".reveal").forEach(e=>observer.observe(e));
   function addMessage(text,who){const node=document.createElement('div');node.className='fh-msg '+who;node.textContent=text;const time=document.createElement('span');time.className='fh-chat-time';time.textContent=stamp();node.appendChild(time);messages.appendChild(node);messages.scrollTop=messages.scrollHeight;return node}
   function answerFor(raw){const q=raw.toLowerCase();
     if(/\b(hi|hello|hey|good morning|good afternoon|good evening)\b/.test(q))return 'Hello! 😊 Welcome to FinHike Solutions. Ask me about the Milk Management System, our services, or how to contact us.';
+    if(/owner|founder|co-founder|director|who owns|who started|who runs|management team|proprietor|kiran|chary|siba/.test(q))return '👥 FinHike Solutions owners: G. Kiran, Janardhana Chary Padakandla, and Siba Prasad Sahu.';
     if(/milk|dairy|collection|fat|litre|liter|morning|evening|billing/.test(q))return '🥛 The Milk Management System helps manage customer records, separate morning and evening milk collection, calculate milk amounts using litres, fat and rate, track Cash/Online payments, and prepare reports. The overview on this page explains the workflow. For a live demo or implementation details, please contact FinHike Solutions.';
     if(/service|what do you do|solutions|offer/.test(q))return 'FinHike Solutions focuses on digital solutions and user-friendly web systems. The website highlights services and solution areas such as education, health, farmer support, marriage bureau, food court, retail and small-business services. Please use the Services section for the available details.';
-    if(/contact|phone|email|reach|talk|demo|quote|enquir|support/.test(q)){const contact=document.querySelector('#contact, [id*="contact" i]');return 'You can reach the team through the Contact section on this webpage. Share your name, contact details and what you need so the team can follow up. For a product walkthrough, mention “Milk Management System demo”.';}
+    if(/contact|phone|email|reach|talk|demo|quote|enquir|support/.test(q)){const contact=document.querySelector('#contact, [id*="contact" i]');return '📞 Contact FinHike Solutions\nPhone: +91 040 4998 9614\nEmail: info@finhikesolutions.com\nYou can also submit an enquiry using the Contact Us form on this website.';}
     if(/linkedin|post/.test(q))return 'You can view the FinHike LinkedIn update using the “From our LinkedIn” section on this webpage, which links to the original post.';
     if(/price|cost|pricing|subscription/.test(q))return 'Pricing depends on the required features, setup and support. I do not have verified pricing in this chat. Please contact FinHike Solutions with your requirements to request a quote.';
     if(/report|pdf|sms|message|festival|customer|payment|cash|online/.test(q))return 'The Milk Management System overview describes customer management, morning/evening entries, payment tracking, reports and customer messaging. Exact availability can depend on the installed application configuration. Contact FinHike Solutions for confirmation of your required setup.';
@@ -1034,7 +1050,15 @@ document.querySelectorAll(".reveal").forEach(e=>observer.observe(e));
     return 'Thanks for your question! I can currently help with the Milk Management System, FinHike services, reports and payments, and contact information. For a detailed or account-specific answer, please use the Contact section and the team can follow up.';
   }
   function send(text){const value=(text||input.value).trim();if(!value)return;addMessage(value,'user');input.value='';const typing=document.createElement('div');typing.className='fh-msg bot';typing.innerHTML='<span class="fh-typing" aria-label="Preparing reply"><i></i><i></i><i></i></span>';messages.appendChild(typing);messages.scrollTop=messages.scrollHeight;window.setTimeout(()=>{typing.remove();addMessage(answerFor(value),'bot')},450)}
-  form.addEventListener('submit',e=>{e.preventDefault();send()});document.querySelectorAll('.fh-quick-btn').forEach(btn=>btn.addEventListener('click',()=>send(btn.getAttribute('data-question')||'')));
+  form.addEventListener('submit',function(e){e.preventDefault();send();});
+  // Handle Enter directly on desktop and mobile hardware keyboards.
+  input.addEventListener('keydown',function(e){
+    if(e.key==='Enter' && !e.isComposing){e.preventDefault();send();}
+  });
+  // Explicit click handler ensures touch/click send works even in embedded browsers.
+  const sendButton=document.getElementById('fh-chat-send');
+  if(sendButton)sendButton.addEventListener('click',function(e){e.preventDefault();send();});
+  document.querySelectorAll('.fh-quick-btn').forEach(btn=>btn.addEventListener('click',()=>send(btn.getAttribute('data-question')||'')));
 })();
 </script>
 
